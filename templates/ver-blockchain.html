@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+    <!-- Cabecera -->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Blockchain</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    </head>
+    <!-- Body -->
+    <body>
+        <div class="pagina pt-4 pb-4">
+            <!-- Titulo -->
+            <div class="container">
+                <div class="row" id="bloques">
+                    <h1>Explorador de bloques</h1>
+                </div>
+            </div>
+            <!-- Zona recursiva de bloque -->
+            <script id="bloque" type="text/html">
+                <div class="border-custom">
+                    <div class="border-bottom-custom">
+                        <div class="title">Bloque {indice} ({tamano} bytes)</div>
+                    </div>
+                    <div >
+                        <div class="title">Hash</div>
+                        <div class="value" style="overflow-x:auto;">{hash}</div>
+                    </div>
+                    <div>
+                        <div class="title">Cabecera</div>
+                        <div class="subtitle">Hash previo</div>
+                        <div class="value" style="overflow-x:auto;">
+                            {hash_previo}</div>
+                        <div class="subtitle">Merkle root</div>
+                        <div class="value" style="overflow-x:auto;">
+                            {raiz_merkle}</div>
+                        <div class="subtitle">Timestamp</div>
+                        <div class="value">{timestamp}</div>
+                        <div class="row">
+                            <div class="col-4" style="padding:0;margin:0;">
+                                <div class="subtitle">Version</div>
+                                <div class="value">{version}</div>
+                            </div>
+                            <div class="col-4" style="padding:0;margin:0;">
+                                <div class="subtitle">Dificultad</div>
+                                <div class="value">{dificultad}</div>
+                            </div>
+                            <div class="col-4" style="padding:0;margin:0;">
+                                <div class="subtitle">Nonce</div>
+                                <div class="value">{nonce}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="title">N. transacciones: {contador_transacciones}</div>
+                        <div class="value" style="overflow-x: auto;
+                        min-height: 100px;
+                        max-height: 100px;
+                        text-align: left;">
+                            {transacciones}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4" style="padding:0;margin:0;">
+                            <div>
+                                <div class="title">T. minado</div>
+                                <div class="value">{tiempo_minado}s</div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="padding:0;margin:0;">
+                            <div>
+                                <div class="title">Kh/s</div>
+                                <div class="value">{potencia_computacion} Kh/s</div>
+                            </div>
+                        </div>
+                        <div class="col-4" style="padding:0;margin:0;">
+                            <div>
+                                <div class="title">Minero</div>
+                                <div class="value">{minado_por}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </script>
+            <!-- Script para añadir zona recursiva en conjunto con Flask  -->
+            <script>
+                blockchain = {{ blockchain | safe }}
+
+                for (bloque in blockchain) {
+                    var div = document.createElement('div');
+
+                    div.setAttribute('class', 'col-xs-12 col-lg-4 text-center gx-4 gy-4');
+
+                    div.innerHTML = document.getElementById('bloque').innerHTML;
+
+                    div.innerHTML = div.innerHTML
+                        .replace(/{indice}/g, blockchain[bloque].indice)
+                        .replace(/{tamano}/g, blockchain[bloque].tamano)
+                        .replace(/{version}/g, blockchain[bloque].cabecera.version)
+                        .replace(/{hash_previo}/g, blockchain[bloque].cabecera.hash_previo)
+                        .replace(/{raiz_merkle}/g, blockchain[bloque].cabecera.raiz_merkle)
+                        .replace(/{timestamp}/g, blockchain[bloque].cabecera.timestamp)
+                        .replace(/{dificultad}/g, blockchain[bloque].cabecera.dificultad)
+                        .replace(/{nonce}/g, blockchain[bloque].cabecera.nonce)
+                        .replace(/{contador_transacciones}/g, blockchain[bloque].contador_transacciones)
+                        .replace(/{transacciones}/g, blockchain[bloque].transacciones)
+                        .replace(/{hash}/g, blockchain[bloque].hash)
+                        .replace(/{tiempo_minado}/g, blockchain[bloque].tiempo_minado)
+                        .replace(/{potencia_computacion}/g, blockchain[bloque].potencia_computacion)
+                        .replace(/{minado_por}/g, blockchain[bloque].minado_por);
+
+                    document.getElementById('bloques').appendChild(div);
+                }
+            </script>
+        </div>
+    </body>
+</html>

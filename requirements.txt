@@ -1,0 +1,8 @@
+flask
+ecdsa
+werkzeug==2.0.0
+pympler
+simple_file_checksum
+pandas
+openpyxl
+xlsxwriter

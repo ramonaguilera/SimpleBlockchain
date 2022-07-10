@@ -1,0 +1,41 @@
+.pagina {
+    background: #D8D2CB;
+    min-height: 100vh;
+}
+
+.row {
+    --bs-gutter-x: 0;
+    --bs-gutter-y: 0;
+}
+
+.border-custom {
+    border: 0.5px solid #0c0c0c;
+}
+
+.border-bottom-custom {
+    border-bottom: 0.5px solid #0c0c0c;
+}
+
+.title {
+    background-color: #1C658C;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0.5rem 0;
+    color: #fff;
+}
+
+.subtitle {
+    background-color: #398AB9;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0.25rem 0;
+    color: #fff;
+}
+
+.value {
+    background-color: #EEEEEE;
+    font-size: 12px;
+    padding: 0.5rem 0.5rem;
+}
+
+
